@@ -33,6 +33,16 @@ export const TOPICS = {
     label: "Computer Networks",
     description: "TCP/IP, OSI Layers, HTTP/HTTPS, DNS & Socket Programming"
   },
+  ML: {
+    id: "ML",
+    label: "Machine Learning",
+    description: "Supervised & Unsupervised Learning, Neural Networks, Model Evaluation"
+  },
+  AI: {
+    id: "AI",
+    label: "Artificial Intelligence",
+    description: "Search Algorithms, NLP, Computer Vision, Expert Systems"
+  },
 };
 
 export const TOTAL_ROUNDS = 5;

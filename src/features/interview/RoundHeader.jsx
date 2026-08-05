@@ -12,12 +12,19 @@ export const RoundHeader = () => {
   
   const topicData = TOPICS[topic] || TOPICS.DSA;
   const progressPercent = (currentDifficulty / 10) * 100;
+  
+  let displayTitle = topicData.label;
+  if (store.profileMode === 'resume') {
+    displayTitle = "Resume-Based Interview";
+  } else if (store.profileMode === 'linkedin') {
+    displayTitle = "LinkedIn Profile Interview";
+  }
 
   return (
     <div className="w-full max-w-4xl mx-auto bg-white border border-[#E5E7EB] rounded-2xl p-6 sm:p-7 shadow-[0_2px_12px_rgba(0,0,0,0.08)] flex flex-col sm:flex-row items-center justify-between gap-6 sm:gap-10 my-3">
       {/* Left: Question Number & Topic */}
       <div className="text-sm sm:text-base font-bold text-[#111827] shrink-0 text-center sm:text-left">
-        Question {currentRound} of {totalRounds} · {topicData.label}
+        Question {currentRound} of {totalRounds} · {displayTitle}
       </div>
 
       {/* Center: Stacked Difficulty Progress Bar (Line on top, text below) */}
