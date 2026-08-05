@@ -8,7 +8,7 @@ import { ttsService } from './services/ttsService';
 
 export function App() {
   const { screen } = useInterviewStore();
-  const apiKey = import.meta.env.VITE_GEMINI_API_KEY;
+  const apiKey = import.meta.env.VITE_OPENROUTER_API_KEY;
 
   useEffect(() => {
     // Stop any speech playback whenever active screen changes
@@ -21,14 +21,14 @@ export function App() {
       <header className="bg-white border-b border-[#E5E7EB] sticky top-0 z-50">
         <div className="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
           {/* Logo Left */}
-          <div className="flex items-center space-x-2.5">
+          <div className="flex items-center space-x-1.5">
             <img
               src="/logo.svg"
-              alt="Infinite Interview Simulator"
+              alt="InfiniteInterview"
               className="h-7 w-auto object-contain shrink-0"
             />
             <span className="font-bold text-lg text-[#2D3A2D] tracking-tight">
-              Infinite Interview Simulator
+              InfiniteInterview
             </span>
           </div>
 
@@ -36,7 +36,7 @@ export function App() {
           <div className="flex items-center space-x-2 text-sm text-[#374151]">
             <span className={`w-2.5 h-2.5 rounded-full ${apiKey ? 'bg-emerald-500' : 'bg-rose-500'}`} />
             <span className="font-medium text-xs sm:text-sm">
-              {apiKey ? "Gemini API Connected" : "Add Gemini Key to .env"}
+              {apiKey ? "AI Connected" : "Add API Key to .env"}
             </span>
           </div>
         </div>

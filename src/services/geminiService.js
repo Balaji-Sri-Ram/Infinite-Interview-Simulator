@@ -1,87 +1,126 @@
 // src/services/geminiService.js
+// Using OpenRouter API (free tier) with Gemini 2.0 Flash
+
+const OPENROUTER_URL = 'https://openrouter.ai/api/v1/chat/completions';
 
 const getApiKey = () => {
-  return import.meta.env.VITE_GEMINI_API_KEY || "";
+  return (import.meta.env.VITE_OPENROUTER_API_KEY || "").trim();
 };
 
 // ─────────────────────────────────────
-// HELPER: call Gemini and return text
+// HELPER: call AI via OpenRouter
 // ─────────────────────────────────────
+const sleep = (ms) => new Promise(r => setTimeout(r, ms));
+
 const callGemini = async (prompt) => {
   const apiKey = getApiKey();
   if (!apiKey) {
-    throw new Error("Missing VITE_GEMINI_API_KEY. Please add your key to the .env file.");
+    throw new Error("Missing VITE_OPENROUTER_API_KEY. Please add your OpenRouter key to the .env file.");
   }
 
-  // Active production models list (gemini-1.5-flash has free tier 15 RPM / 1500 RPD)
-  const models = ['gemini-1.5-flash', 'gemini-2.0-flash', 'gemini-1.5-pro'];
-  let lastErrorText = "";
+  const models = [
+    'openrouter/free',
+    'google/gemma-4-31b-it:free',
+    'google/gemma-4-26b-a4b-it:free'
+  ];
 
-  for (const model of models) {
-    try {
-      const geminiUrl = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
+  let lastError = null;
 
-      console.log(`CALLING GEMINI API (${model})...`);
-      console.log('PROMPT PREVIEW:', prompt.slice(0, 200));
+  for (const modelName of models) {
+    const maxRetries = 2;
 
-      const response = await fetch(geminiUrl, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          contents: [{ 
-            parts: [{ text: prompt }] 
-          }],
-          generationConfig: {
+    for (let attempt = 1; attempt <= maxRetries; attempt++) {
+      try {
+        console.log(`CALLING OpenRouter (${modelName}), attempt ${attempt}...`);
+        console.log('PROMPT PREVIEW:', prompt.slice(0, 200));
+
+        const response = await fetch(OPENROUTER_URL, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${apiKey}`,
+            'HTTP-Referer': window.location.origin,
+            'X-Title': 'Infinite Interview Simulator'
+          },
+          body: JSON.stringify({
+            model: modelName,
+            messages: [
+              { role: 'user', content: prompt }
+            ],
+            response_format: { type: "json_object" },
             temperature: 1.0,
-            maxOutputTokens: 800,
-            topP: 0.95,
-            topK: 40
+            max_tokens: 800,
+            top_p: 0.95
+          })
+        });
+
+        if (!response.ok) {
+          const errorText = await response.text();
+          console.warn(`Model ${modelName} error (${response.status}):`, errorText);
+
+          // Rate limit — wait and retry
+          if (response.status === 429) {
+            if (attempt < maxRetries) {
+              console.log(`Rate limited. Waiting ${attempt * 3}s...`);
+              await sleep(attempt * 3000);
+              continue;
+            }
           }
-        })
-      });
 
-      if (!response.ok) {
-        lastErrorText = await response.text();
-        console.warn(`Model ${model} returned error status ${response.status}:`, lastErrorText);
-        // Continue to fallback model if 429 (Quota limit) or 404 (Not Found)
-        continue;
+          lastError = new Error(`OpenRouter ${response.status}: ${errorText}`);
+          break; // try next model
+        }
+
+        const data = await response.json();
+        console.log('OPENROUTER RAW RESPONSE:', data);
+
+        const rawText = data.choices?.[0]?.message?.content;
+
+        if (!rawText) {
+          console.warn(`Model ${modelName} returned empty content`);
+          lastError = new Error('Empty response from AI');
+          break; // try next model
+        }
+
+        console.log(`SUCCESS (${modelName}):`, rawText);
+        return rawText;
+      } catch (err) {
+        console.warn(`Attempt ${attempt} with ${modelName} failed:`, err.message);
+        lastError = err;
       }
-
-      const data = await response.json();
-      console.log('GEMINI RAW RESPONSE:', data);
-
-      const rawText = data.candidates?.[0]?.content?.parts?.[0]?.text;
-
-      if (!rawText) {
-        console.warn(`Model ${model} returned empty content, trying next model...`);
-        continue;
-      }
-
-      console.log(`GEMINI SUCCESS (${model}):`, rawText);
-      return rawText;
-    } catch (err) {
-      console.warn(`Attempt with ${model} failed:`, err);
-      lastErrorText = err.message || String(err);
     }
   }
 
-  throw new Error(`Gemini API failed across models: ${lastErrorText}`);
+  throw lastError || new Error("All AI models failed. Please try again.");
 };
 
 // ─────────────────────────────────────
-// HELPER: parse JSON from Gemini text
+// HELPER: parse JSON from AI text
 // ─────────────────────────────────────
 const parseJSON = (text) => {
-  const clean = text
-    .replace(/```json/gi, '')
-    .replace(/```/g, '')
-    .trim();
-  
   try {
-    return JSON.parse(clean);
+    let jsonStr = text;
+    
+    // 1. Try to extract JSON block using regex
+    const match = text.match(/\{[\s\S]*\}/);
+    if (match) {
+      jsonStr = match[0];
+    } else {
+      // Fallback markdown strip
+      jsonStr = text.replace(/```json/gi, '').replace(/```/g, '').trim();
+    }
+
+    // 2. Sanitize common AI JSON mistakes
+    // Remove trailing commas before } or ]
+    jsonStr = jsonStr.replace(/,\s*([}\]])/g, '$1');
+    
+    // Remove unescaped newlines inside strings (basic fix)
+    jsonStr = jsonStr.replace(/[\u0000-\u001F]+/g, ' ');
+
+    return JSON.parse(jsonStr);
   } catch (e) {
-    console.error('JSON PARSE FAILED:', clean);
-    throw new Error('Failed to parse Gemini JSON');
+    console.error('JSON PARSE FAILED. Original text:', text);
+    throw new Error('Failed to parse AI JSON response. The AI generated invalid formatting.');
   }
 };
 
