@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" width="100%" height="100%">
+  <defs>
+    <linearGradient id="userBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#065f46" />
+      <stop offset="100%" stop-color="#022c22" />
+    </linearGradient>
+    <linearGradient id="userShirt" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#10b981" />
+      <stop offset="100%" stop-color="#047857" />
+    </linearGradient>
+    <linearGradient id="userSkin" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fed7aa" />
+      <stop offset="100%" stop-color="#fdba74" />
+    </linearGradient>
+  </defs>
+
+  <!-- Background Circle Glow -->
+  <circle cx="200" cy="200" r="180" fill="url(#userBg)" stroke="#10b981" stroke-width="2" opacity="0.8"/>
+  <circle cx="200" cy="200" r="150" fill="none" stroke="#34d399" stroke-width="1" stroke-dasharray="6 6" opacity="0.4"/>
+
+  <!-- Shoulders & Hoodie/Shirt -->
+  <path d="M110,380 Q110,260 200,260 Q290,260 290,380 Z" fill="url(#userShirt)" />
+
+  <!-- Head & Neck -->
+  <rect x="185" y="215" width="30" height="50" rx="5" fill="url(#userSkin)" />
+  <ellipse cx="200" cy="175" rx="45" ry="52" fill="url(#userSkin)" />
+
+  <!-- Modern Hair -->
+  <path d="M150,165 C150,110 250,110 250,165 C240,130 160,130 150,165 Z" fill="#451a03" />
+
+  <!-- Headset -->
+  <path d="M150,175 C145,115 255,115 250,175" fill="none" stroke="#334155" stroke-width="6" stroke-linecap="round" />
+  <rect x="145" y="160" width="12" height="30" rx="6" fill="#1e293b" stroke="#10b981" stroke-width="2" />
+  <rect x="243" y="160" width="12" height="30" rx="6" fill="#1e293b" stroke="#10b981" stroke-width="2" />
+  <!-- Mic arm -->
+  <path d="M148,185 Q135,210 175,210" fill="none" stroke="#334155" stroke-width="3" />
+  <circle cx="177" cy="210" r="5" fill="#10b981" />
+
+  <!-- Eyes -->
+  <circle cx="178" cy="172" r="4" fill="#1e293b" />
+  <circle cx="222" cy="172" r="4" fill="#1e293b" />
+
+  <!-- Confident Smile -->
+  <path d="M185,200 Q200,212 215,200" fill="none" stroke="#c2410c" stroke-width="3" stroke-linecap="round" />
+</svg>

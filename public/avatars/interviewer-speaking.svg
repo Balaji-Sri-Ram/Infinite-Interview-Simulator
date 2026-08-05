@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1e1b4b" />
+      <stop offset="100%" stop-color="#0f172a" />
+    </linearGradient>
+    <linearGradient id="suitGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#312e81" />
+      <stop offset="100%" stop-color="#1e1b4b" />
+    </linearGradient>
+    <linearGradient id="skinGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fca5a5" />
+      <stop offset="100%" stop-color="#f87171" />
+    </linearGradient>
+    <linearGradient id="laptopGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#475569" />
+      <stop offset="100%" stop-color="#1e293b" />
+    </linearGradient>
+  </defs>
+
+  <!-- Background Circle Glow -->
+  <circle cx="200" cy="200" r="180" fill="url(#bgGrad)" stroke="#818cf8" stroke-width="3" opacity="0.9"/>
+  <circle cx="200" cy="200" r="160" fill="none" stroke="#a5b4fc" stroke-width="1.5" stroke-dasharray="8 6" opacity="0.5"/>
+
+  <!-- Body / Suit -->
+  <path d="M120,380 Q120,270 200,270 Q280,270 280,380 Z" fill="url(#suitGrad)" />
+  <path d="M175,270 L200,320 L225,270 Z" fill="#ffffff" opacity="0.9" />
+  <path d="M195,290 L205,290 L208,350 L192,350 Z" fill="#ef4444" /> <!-- Tie -->
+
+  <!-- Head & Neck -->
+  <rect x="185" y="225" width="30" height="45" rx="5" fill="url(#skinGrad)" />
+  <ellipse cx="200" cy="180" rx="45" ry="55" fill="url(#skinGrad)" />
+
+  <!-- Hair -->
+  <path d="M152,170 Q160,120 200,120 Q240,120 248,170 Q210,140 152,170 Z" fill="#1e293b" />
+
+  <!-- Glasses -->
+  <rect x="165" y="165" width="28" height="20" rx="4" fill="none" stroke="#cbd5e1" stroke-width="3" />
+  <rect x="207" y="165" width="28" height="20" rx="4" fill="none" stroke="#cbd5e1" stroke-width="3" />
+  <line x1="193" y1="175" x2="207" y2="175" stroke="#cbd5e1" stroke-width="3" />
+  <line x1="155" y1="175" x2="165" y2="175" stroke="#cbd5e1" stroke-width="2" />
+  <line x1="235" y1="175" x2="245" y2="175" stroke="#cbd5e1" stroke-width="2" />
+
+  <!-- Eyes behind glasses -->
+  <circle cx="179" cy="175" r="4" fill="#0f172a" />
+  <circle cx="221" cy="175" r="4" fill="#0f172a" />
+
+  <!-- Mouth (Speaking O-Shape / Oval Mouth) -->
+  <ellipse cx="200" cy="210" rx="9" ry="7" fill="#7f1d1d" stroke="#ef4444" stroke-width="1.5" />
+
+  <!-- Speaking Speech Bubble Graphics -->
+  <g transform="translate(250, 100)">
+    <rect x="0" y="0" width="80" height="45" rx="12" fill="#312e81" stroke="#818cf8" stroke-width="2" />
+    <path d="M10,45 L0,55 L20,45 Z" fill="#312e81" />
+    <circle cx="25" cy="22" r="4" fill="#818cf8" />
+    <circle cx="40" cy="22" r="4" fill="#a5b4fc" />
+    <circle cx="55" cy="22" r="4" fill="#c7d2fe" />
+  </g>
+
+  <!-- Desk & Laptop -->
+  <rect x="80" y="340" width="240" height="60" rx="6" fill="#0f172a" stroke="#334155" stroke-width="2"/>
+  <polygon points="140,340 260,340 250,295 150,295" fill="url(#laptopGrad)" stroke="#64748b" stroke-width="1.5"/>
+  <rect x="165" y="305" width="70" height="30" rx="3" fill="#38bdf8" opacity="0.3"/>
+  <circle cx="200" cy="320" r="6" fill="#38bdf8" opacity="0.8"/>
+</svg>
