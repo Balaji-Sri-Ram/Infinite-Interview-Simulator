@@ -13,57 +13,44 @@ const callGemini = async (prompt) => {
     throw new Error("Missing VITE_GEMINI_API_KEY. Please add your key to the .env file.");
   }
 
-  // Active production models fallback list
-  const models = ['gemini-1.5-flash', 'gemini-2.0-flash', 'gemini-1.5-pro'];
-  let lastError = null;
+  const geminiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
 
-  for (const model of models) {
-    try {
-      const geminiUrl = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
+  console.log('CALLING GEMINI API (gemini-2.0-flash)...');
+  console.log('PROMPT PREVIEW:', prompt.slice(0, 200));
 
-      console.log(`CALLING GEMINI API (${model})...`);
-      console.log('PROMPT PREVIEW:', prompt.slice(0, 200));
-
-      const response = await fetch(geminiUrl, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          contents: [{ 
-            parts: [{ text: prompt }] 
-          }],
-          generationConfig: {
-            temperature: 1.0,
-            maxOutputTokens: 800,
-            topP: 0.95,
-            topK: 40
-          }
-        })
-      });
-
-      if (!response.ok) {
-        const errorText = await response.text();
-        console.warn(`Model ${model} API Error:`, errorText);
-        throw new Error(`Model ${model} failed (${response.status}): ${errorText}`);
+  const response = await fetch(geminiUrl, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      contents: [{ 
+        parts: [{ text: prompt }] 
+      }],
+      generationConfig: {
+        temperature: 1.0,
+        maxOutputTokens: 800,
+        topP: 0.95,
+        topK: 40
       }
+    })
+  });
 
-      const data = await response.json();
-      console.log('GEMINI RAW RESPONSE:', data);
-
-      const rawText = data.candidates?.[0]?.content?.parts?.[0]?.text;
-
-      if (!rawText) {
-        throw new Error(`Model ${model} returned empty response`);
-      }
-
-      console.log('GEMINI TEXT:', rawText);
-      return rawText;
-    } catch (err) {
-      console.warn(`Attempt with ${model} failed, trying fallback model...`, err);
-      lastError = err;
-    }
+  if (!response.ok) {
+    const errorText = await response.text();
+    console.error('GEMINI API ERROR:', errorText);
+    throw new Error(`Gemini API failed: ${errorText}`);
   }
 
-  throw lastError || new Error("Failed to connect to Gemini API");
+  const data = await response.json();
+  console.log('GEMINI RAW RESPONSE:', data);
+
+  const rawText = data.candidates?.[0]?.content?.parts?.[0]?.text;
+
+  if (!rawText) {
+    throw new Error('Gemini returned empty response');
+  }
+
+  console.log('GEMINI TEXT:', rawText);
+  return rawText;
 };
 
 // ─────────────────────────────────────
