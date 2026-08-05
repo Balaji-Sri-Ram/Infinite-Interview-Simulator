@@ -101,13 +101,16 @@ const parseJSON = (text) => {
   try {
     let jsonStr = text;
     
+    // 0. Remove <think>...</think> blocks completely (DeepSeek/Reasoning models)
+    jsonStr = jsonStr.replace(/<think>[\s\S]*?<\/think>/gi, '').trim();
+    
     // 1. Try to extract JSON block using regex
-    const match = text.match(/\{[\s\S]*\}/);
+    const match = jsonStr.match(/\{[\s\S]*\}/);
     if (match) {
       jsonStr = match[0];
     } else {
       // Fallback markdown strip
-      jsonStr = text.replace(/```json/gi, '').replace(/```/g, '').trim();
+      jsonStr = jsonStr.replace(/```json/gi, '').replace(/```/g, '').trim();
     }
 
     // 2. Sanitize common AI JSON mistakes
