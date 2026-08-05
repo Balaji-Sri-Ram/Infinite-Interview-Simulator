@@ -36,7 +36,7 @@ export function App() {
           <div className="flex items-center space-x-2 text-sm text-[#374151]">
             <span className={`w-2.5 h-2.5 rounded-full ${apiKey ? 'bg-emerald-500' : 'bg-rose-500'}`} />
             <span className="font-medium text-xs sm:text-sm">
-              {apiKey ? "Gemini 2.5 Flash Connected" : "Add Gemini Key to .env"}
+              {apiKey ? "Gemini API Connected" : "Add Gemini Key to .env"}
             </span>
           </div>
         </div>
