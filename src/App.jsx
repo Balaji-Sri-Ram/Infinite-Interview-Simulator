@@ -55,7 +55,7 @@ export function App() {
       <footer className="border-t border-[#E5E7EB] bg-white py-4 text-center text-xs text-[#6B7280]">
         <div className="max-w-6xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-2">
           <span>Infinite Interview Simulator — AI Technical Assessment Platform</span>
-          <span>Powered by Google Gemini 2.5 Flash & Web Speech API</span>
+          <span>Powered by Google Gemini 2.0 Flash & Web Speech API</span>
         </div>
       </footer>
     </div>
