@@ -5,7 +5,6 @@ import { SetupScreen } from './features/setup/SetupScreen';
 import { InterviewScreen } from './features/interview/InterviewScreen';
 import { FeedbackScreen } from './features/feedback/FeedbackScreen';
 import { ttsService } from './services/ttsService';
-import { LogoIcon } from './components/LogoIcon';
 
 export function App() {
   const { screen } = useInterviewStore();
@@ -23,7 +22,11 @@ export function App() {
         <div className="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
           {/* Logo Left */}
           <div className="flex items-center space-x-2.5">
-            <LogoIcon className="w-6 h-6 text-[#2D3A2D] shrink-0" />
+            <img
+              src="/logo.svg"
+              alt="Infinite Interview Simulator"
+              className="h-7 w-auto object-contain shrink-0"
+            />
             <span className="font-bold text-lg text-[#2D3A2D] tracking-tight">
               Infinite Interview Simulator
             </span>
