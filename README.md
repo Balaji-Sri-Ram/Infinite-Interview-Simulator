@@ -91,4 +91,4 @@ When asked by evaluators why this project is advanced:
 
 ## 🚀 Live Demo
 
-Check out the live application here: [Infinite Interview Simulator](https://your-demo-url.vercel.app)](https://infinite-interview-simulator.vercel.app/)
+Check out the live application here: [Infinite Interview Simulator](https://infinite-interview-simulator.vercel.app)
