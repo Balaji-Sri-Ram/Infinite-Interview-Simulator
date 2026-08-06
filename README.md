@@ -89,6 +89,6 @@ When asked by evaluators why this project is advanced:
 
 ---
 
-## License
+## 🚀 Live Demo
 
-MIT License
+Check out the live application here: [Infinite Interview Simulator](https://your-demo-url.vercel.app)](https://infinite-interview-simulator.vercel.app/)
