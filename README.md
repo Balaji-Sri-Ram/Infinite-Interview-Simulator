@@ -78,14 +78,7 @@ Built with React + Vite, animated personas, adaptive think timers, and browser-n
 
 ---
 
-## Viva / Presentation Defense Guide
 
-When asked by evaluators why this project is advanced:
-
-1. **Adaptive Assessment Engine**: Implements dynamic difficulty scaling inspired by Item Response Theory (IRT) used in GRE/GMAT testing. Questions scale up (+1) on high correctness and depth, scale down (-1) on surface/vague answers, or remain neutral (0).
-2. **LLM-as-Judge & Generator Pattern**: Uses structured JSON output where Gemini concurrently acts as answer grader, depth assessor, and next question generator in a single round-trip prompt.
-3. **Multimodal Voice & Text Input/Output**: Full text + voice interaction loop using native Web Speech API without external paid APIs.
-4. **Zero-Latency Non-blocking UX**: Simultaneous execution of slide transitions, animated speech bubbles, sound wave indicators, and async Gemini calls.
 
 ---
 
