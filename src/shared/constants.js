@@ -1,8 +1,8 @@
 // Think time map for Interviewer Question Turn (in seconds)
 export const INTERVIEWER_THINK_TIME = {
-  1: 30, 2: 30, 3: 30,   // Easy — 30 seconds
-  4: 20, 5: 20, 6: 20,   // Medium — 20 seconds
-  7: 10, 8: 10, 9: 10, 10: 10 // Hard & Expert — 10 seconds
+  1: 30, 2: 30, 3: 30, 4: 30,  // Easy — 30 seconds
+  5: 45, 6: 45, 7: 45,         // Medium — 45 seconds
+  8: 60, 9: 60, 10: 60         // Hard & Expert — 60 seconds
 };
 
 // Answer time map for Candidate Turn (in seconds)
