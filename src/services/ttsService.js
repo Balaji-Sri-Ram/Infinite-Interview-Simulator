@@ -36,31 +36,33 @@ class TTSService {
     // Cancel any ongoing speech
     this.cancel();
 
-    const utterance = new SpeechSynthesisUtterance(text);
-    if (this.selectedVoice) {
-      utterance.voice = this.selectedVoice;
-    }
-    utterance.rate = 1.0;
-    utterance.pitch = 1.0;
+    setTimeout(() => {
+      const utterance = new SpeechSynthesisUtterance(text);
+      if (this.selectedVoice) {
+        utterance.voice = this.selectedVoice;
+      }
+      utterance.rate = 0.85;
+      utterance.pitch = 1.0;
 
-    utterance.onstart = () => {
-      this.isSpeaking = true;
-      if (onStart) onStart();
-    };
+      utterance.onstart = () => {
+        this.isSpeaking = true;
+        if (onStart) onStart();
+      };
 
-    utterance.onend = () => {
-      this.isSpeaking = false;
-      if (onEnd) onEnd();
-    };
+      utterance.onend = () => {
+        this.isSpeaking = false;
+        if (onEnd) onEnd();
+      };
 
-    utterance.onerror = (e) => {
-      this.isSpeaking = false;
-      console.warn("TTS Error:", e);
-      if (onError) onError(e);
-      if (onEnd) onEnd();
-    };
+      utterance.onerror = (e) => {
+        this.isSpeaking = false;
+        console.warn("TTS Error:", e);
+        if (onError) onError(e);
+        if (onEnd) onEnd();
+      };
 
-    this.synth.speak(utterance);
+      this.synth.speak(utterance);
+    }, 50);
   }
 
   cancel() {

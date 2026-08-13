@@ -6,9 +6,9 @@ import { CircularTimer } from './CircularTimer';
 import { INTERVIEWER_THINK_TIME } from '../../shared/constants';
 
 export const QuestionDisplay = ({ questionText, isActive = false, onThinkTimeExpired }) => {
-  const { isInterviewerSpeaking, setIsInterviewerSpeaking, currentDifficulty, screen } = useInterviewStore();
+  const { isInterviewerSpeaking, setIsInterviewerSpeaking, difficulty, screen } = useInterviewStore();
 
-  const thinkSeconds = INTERVIEWER_THINK_TIME[currentDifficulty] || 20;
+  const thinkSeconds = INTERVIEWER_THINK_TIME[difficulty] || 20;
 
   useEffect(() => {
     if (isActive && screen === 'INTERVIEW' && questionText && ttsService.isSupported()) {
