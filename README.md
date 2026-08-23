@@ -4,7 +4,13 @@
 
 ---
 
+## Overview
 
+A GenAI web application that simulates real technical interviews for CS topics (DSA, DBMS, OS, Computer Networks).
+Uses Google Gemini 2.5 Flash to evaluate candidate responses in real time and dynamically adjust question difficulty.
+Built with React + Vite, animated personas, adaptive think timers, and browser-native voice I/O.
+
+---
 
 ## Getting Started
 
